@@ -1,0 +1,2 @@
+class PrimaryCommentsController < ApplicationController
+end
