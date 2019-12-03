@@ -1,0 +1,9 @@
+<h1>Login</h1>
+
+<%= form_tag "/login", method: "post" do %>
+		User: <%= collection_select :user, :id, User.all, :id, :name %>
+		Password: <%= password_field_tag "password" %>
+		<%= submit_tag "Sign In" %>
+<% end %>
+
+<br><br><br><%= link_to "Back to Homepage", '/' %>
