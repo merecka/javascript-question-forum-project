@@ -3,9 +3,6 @@ class PrimaryCommentsController < ApplicationController
 	  def index
   		primary_comments = PrimaryComment.all
       render json: primary_comments
-    #   render json: primary_comments.to_json(:include => {
-    #   :pokemons => {:only => [:id, :species, :nickname, :trainer_id]}
-    # }, :except => [:created_at, :updated_at])
   	end
 
   	def show
