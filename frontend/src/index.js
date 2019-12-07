@@ -3,15 +3,17 @@ const PRIMARY_COMMENTS_URL = `${BASE_URL}/primary_comments`
 const SECONDARY_COMMENTS_URL = `${BASE_URL}/secondary_comments`
 
 function createPrimaryComments(primary_comments) {
-	console.log(primary_comments)
 	const primary_comments_main = document.getElementById("questions")
-	primary_comments.forEach((primary_comment) => {
+	primary_comments["data"].forEach((primary_comment) => {
 		const primary_comment_div = document.createElement('div')
 		primary_comment_div.className = "prim-comment"
-		primary_comment_div.id = primary_comment.id
-		primary_comment_div.setAttribute("data-id", primary_comment.id)
+		primary_comment_div.id = primary_comment["attributes"]["id"]
+		primary_comment_div.setAttribute("data-id", primary_comment["attributes"]["id"])
+		// const name_element = document.createElement('h3')
+		// name_element.innerText = primary_comments["included"][0]["attributes"].name
+		// primary_comment_div.append(name_element)
 		let comment_para = document.createElement('p')
-		comment_para.innerText = primary_comment.comment
+		comment_para.innerText = primary_comment["attributes"]["comment"]
 		primary_comment_div.append(comment_para)
 		primary_comments_main.append(primary_comment_div)
 		// let add_pokemon_button = document.createElement('button')
@@ -40,18 +42,17 @@ function createPrimaryComments(primary_comments) {
 
 function createSecondaryComments(secondary_comments) {
 	const primary_comment_divs = document.querySelectorAll(".prim-comment")
-	secondary_comments.forEach((secondary_comment) => {
+	secondary_comments["data"].forEach((secondary_comment) => {
 		// const primary_comment_div = document.querySelector("div #`${secondary_comment.primary_comment.id}`")
 		const secondary_comment_div = document.createElement('div')
 		secondary_comment_div.className = "sec comment"
-		secondary_comment_div.id = secondary_comment.id
+		secondary_comment_div.id = secondary_comment["attributes"].id
 		let comment_para = document.createElement('p')
-		comment_para.innerText = secondary_comment.comment
+		comment_para.innerText = secondary_comment["attributes"].comment
 		secondary_comment_div.append(comment_para)
 		primary_comment_divs.forEach((prime_comment) => {
-			if (prime_comment.id === secondary_comment.primary_comment_id.toString()) {
+			if (prime_comment.id === secondary_comment["attributes"].primary_comment_id.toString()) {
 				prime_comment.append(secondary_comment_div)
-				console.log(prime_comment)
 			}
 		})
 	})
@@ -126,7 +127,6 @@ function newQuestionForm() {
 		for (const [key, value] of form_data.entries()) {
 			jsonObject[key] = value
 		}
-		debugger
 		console.log(formData)
 
 		// fetch(PRIMARY_COMMENTS_URL, {
@@ -143,7 +143,6 @@ function newQuestionForm() {
 		// 	createPokemon(pokemon, ul)
 		// })
 	})
-
 }	
 
 

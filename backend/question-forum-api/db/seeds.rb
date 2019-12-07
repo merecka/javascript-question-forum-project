@@ -17,3 +17,11 @@ SecondaryComment.create(primary_comment_id: 1, user_id: 3, comment: "I agree, an
 PrimaryComment.create(user_id: 1, comment: "Is this the second question in this forum?")
 SecondaryComment.create(primary_comment_id: 2, user_id: 2, comment: "Yes, I think it is the second question!")
 SecondaryComment.create(primary_comment_id: 2, user_id: 3, comment: "I agree, I think this is the second comment as well!")
+
+PrimaryComment.create(user_id: 2, comment: "Is this the third question in this forum?")
+SecondaryComment.create(primary_comment_id: 3, user_id: 1, comment: "Yes, I think it is the third question!")
+SecondaryComment.create(primary_comment_id: 3, user_id: 3, comment: "I agree, I think this is the third comment as well!")
+
+PrimaryComment.create(user_id: 3, comment: "Is this the fourth question in this forum?")
+SecondaryComment.create(primary_comment_id: 4, user_id: 1, comment: "Yes, I think it is the fourth question!")
+SecondaryComment.create(primary_comment_id: 4, user_id: 2, comment: "I agree, I think this is the fourth comment as well!")

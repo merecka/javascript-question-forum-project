@@ -2,11 +2,14 @@ class PrimaryCommentsController < ApplicationController
 
 	  def index
   		primary_comments = PrimaryComment.all
-      render json: primary_comments
+      options = {
+        include: [:user]
+      }
+      render json: PrimaryCommentSerializer.new(primary_comments, options)
   	end
 
   	def show
-      		@primary_comments = PrimaryComment.all
+      	@primary_comments = PrimaryComment.all
   	end
 
   	def new
