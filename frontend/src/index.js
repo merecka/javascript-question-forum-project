@@ -1,62 +1,58 @@
 const BASE_URL = "http://localhost:3000"
+const USERS_URL = `${BASE_URL}/users`
 const PRIMARY_COMMENTS_URL = `${BASE_URL}/primary_comments`
 const SECONDARY_COMMENTS_URL = `${BASE_URL}/secondary_comments`
+let users_obj = {}
+
+function createUsersObj(users) { // Saves User data from Fetch into variable
+	users_obj = users
+}
+
 
 function createPrimaryComments(primary_comments) {
 	const primary_comments_main = document.getElementById("questions")
 	primary_comments["data"].forEach((primary_comment) => {
 		const primary_comment_div = document.createElement('div')
 		primary_comment_div.className = "prim-comment"
-		primary_comment_div.id = primary_comment["attributes"]["id"]
+		primary_comment_div.id = `prim-comment-${primary_comment["attributes"]["id"]}`
 		primary_comment_div.setAttribute("data-id", primary_comment["attributes"]["id"])
-		// const name_element = document.createElement('h3')
-		// name_element.innerText = primary_comments["included"][0]["attributes"].name
-		// primary_comment_div.append(name_element)
 		let comment_para = document.createElement('p')
 		comment_para.innerText = primary_comment["attributes"]["comment"]
 		primary_comment_div.append(comment_para)
 		primary_comments_main.append(primary_comment_div)
-		// let add_pokemon_button = document.createElement('button')
-		// add_pokemon_button.setAttribute("data-trainer-id", trainer.id)
-		// add_pokemon_button.innerText = "Add Pokemon"
-		// let ul = generatePokemonList(trainer.pokemons)
-		// trainer_div.append(trainer_para, add_pokemon_button, ul)
-		// trainers_main.append(trainer_div)
-		// add_pokemon_button.addEventListener("click", function() {
-		// 	fetch(POKEMONS_URL, {
-		// 		method: "POST",
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: JSON.stringify({trainer_id: trainer.id})
-		// 		})
-		// 	.then(function(response) {
-		// 		return response.json()
-		// 	})
-		// 	.then(function(pokemon) {
-		// 		createPokemon(pokemon, ul)
-		// 	})
-		// })
+		const name_element = document.createElement('h3')
+		users_obj["data"].forEach((user) => {
+			if (user.attributes.id === primary_comment["attributes"]["user_id"])
+				name_element.innerText = user.attributes.name // Sets User name to Primary comments they've created
+		})
+		primary_comment_div.append(name_element)
 	})
 }
 
 function createSecondaryComments(secondary_comments) {
 	const primary_comment_divs = document.querySelectorAll(".prim-comment")
 	secondary_comments["data"].forEach((secondary_comment) => {
-		// const primary_comment_div = document.querySelector("div #`${secondary_comment.primary_comment.id}`")
 		const secondary_comment_div = document.createElement('div')
-		secondary_comment_div.className = "sec comment"
-		secondary_comment_div.id = secondary_comment["attributes"].id
-		let comment_para = document.createElement('p')
+		secondary_comment_div.className = "sec-comment"
+		secondary_comment_div.id = `sec-comment-${secondary_comment["attributes"]["id"]}`
+		secondary_comment_div.setAttribute("data-id", secondary_comment["attributes"]["id"])
+		const comment_para = document.createElement('p')
 		comment_para.innerText = secondary_comment["attributes"].comment
 		secondary_comment_div.append(comment_para)
+		const name_element = document.createElement('h5')
+		users_obj["data"].forEach((user) => {
+			if (user.attributes.id === secondary_comment["attributes"]["user_id"])
+				name_element.innerText = user.attributes.name // Sets User name to Secondary comments they've created
+		})
+		secondary_comment_div.append(name_element)
 		primary_comment_divs.forEach((prime_comment) => {
-			if (prime_comment.id === secondary_comment["attributes"].primary_comment_id.toString()) {
-				prime_comment.append(secondary_comment_div)
+			if (prime_comment.dataset.id === secondary_comment["attributes"].primary_comment_id.toString()) {
+				prime_comment.append(secondary_comment_div) // Appends Secondary comments to Primary comment div
 			}
 		})
 	})
 }
+
 
 function createNewCommentButton() {
 	let new_prim_comment_button = document.createElement('button')
@@ -146,7 +142,19 @@ function newQuestionForm() {
 }	
 
 
-document.addEventListener('DOMContentLoaded', function() {   
+document.addEventListener('DOMContentLoaded', function() {
+	fetch(USERS_URL) // Fetch User data from API
+		.then(function(response) {
+		  return response.json();
+		})
+		.then(function(users) {
+			createUsersObj(users) // Saves the Users to variable outside of fetch
+		})
+		.catch(function(error) {
+		    alert("There was an error fetching the Users!");
+		    console.log(error)
+		}) 
+
 	fetch(PRIMARY_COMMENTS_URL)
 	  .then(function(response) {
 	    return response.json();

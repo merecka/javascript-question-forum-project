@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :locate_user, only: [:show, :edit, :update]
 
   def index
-  	@users = User.all
+  	users = User.all
+    render json: UserSerializer.new(users)
   end
 
   def new
