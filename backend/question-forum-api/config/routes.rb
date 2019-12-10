@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
 
-  root to: 'application#index'
+  root to: 'sessions#new'
 	
   resources :secondary_comments
   resources :primary_comments
   resources :users
+  resources :sessions
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'

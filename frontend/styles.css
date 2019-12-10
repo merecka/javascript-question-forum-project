@@ -1,10 +1,20 @@
 @import "http://fonts.googleapis.com/css?family=Ubuntu";
-/*div#main{
+div#main{
 width:830px;
 height:650px;
 margin:0 auto;
 font-family:'Ubuntu',sans-serif
-}*/
+}
+
+div#login{
+text-align:center;
+border:1px solid #ccc;
+width:300px;
+padding:0 50px 15px;
+margin-top:20px;
+box-shadow:0 0 15px;
+border-radius:6px;
+}
 
 div#new_question{
 text-align:center;
@@ -14,7 +24,64 @@ padding:0 50px 15px;
 margin-top:20px;
 box-shadow:0 0 15px;
 border-radius:6px;
-float:left
+/*float:left*/
+}
+
+#new-question-button {
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:19px;
+	padding:12px 37px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+
+#new-question-button:hover {
+	background-color:#476e9e;
+}
+#new-question-button:active {
+	position:relative;
+	top:1px;
+}
+
+#prime-comment-reply-button {
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:12px;
+	padding:12px 37px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+
+#new-question-button:hover {
+	background-color:#476e9e;
+}
+#new-question-button:active {
+	position:relative;
+	top:1px;
+}
+
+div#new-sec-comment{
+text-align:center;
+border:1px solid #ccc;
+width:300px;
+padding:0 50px 15px;
+margin-top:20px;
+box-shadow:0 0 15px;
+border-radius:6px;
+/*float:left*/
 }
 
 #main h1{

@@ -17,12 +17,14 @@ class PrimaryCommentsController < ApplicationController
   	end
 
   	def create
-    	@primary_comment = PrimaryComment.create(primary_comment_params)
-    	if @primary_comment
+    	primary_comment = PrimaryComment.create(user_id: params[:user_id], comment: params[:comment])
+    	if primary_comment
     		# Redirects to the Primary Comment's show page
-    		redirect_to primary_comment_path(@primary_comment)
-    	else
-    	render :new
+        primary_comments = PrimaryComment.all
+        options = {
+        include: [:user]
+        }
+        render json: PrimaryCommentSerializer.new(primary_comments, options)
     	end
   	end
 

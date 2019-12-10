@@ -75,6 +75,5 @@ function loginForm() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-
-	  loginForm()
+	loginForm()
 })

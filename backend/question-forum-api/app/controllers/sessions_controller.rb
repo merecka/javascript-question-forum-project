@@ -1,12 +1,13 @@
 class SessionsController < ApplicationController
 
   def new
-    if current_user
-      #If already logged in, redirect to questions index page.
-      redirect_to '/'
-    else
-      redirect_to '/login'
-    end
+    # if current_user
+    #   #If already logged in, redirect to questions index page.
+    #   redirect_to '/'
+    # else
+      # render file: "/Users/alexmerecka/Software-Programming/FlatIron-Labs/javascript-project-question-forum/frontend/login.html", layout: false
+      # render inline: File.read('/Users/alexmerecka/Software-Programming/FlatIron-Labs/javascript-project-question-forum/frontend/login.html')
+    # end
   end
 
   def create
@@ -20,7 +21,6 @@ class SessionsController < ApplicationController
       if user && user.password == params[:password]
         session[:current_user_id] = user.id
         render json: user
-        # render :file => "/Users/alexmerecka/Software-Programming/FlatIron-Labs/javascript-project-question-forum/frontend/index.html"
       else
         redirect_to '/login'
       end
