@@ -62,6 +62,8 @@ function loginForm() {
 			})
 		.then(function(response) {
 			return response.json()
+			if (res.status < 200 || res.status > 299) {
+	  		throw new Error() }
 		})
 		.then(function() {
 			window.location.pathname = "/Users/alexmerecka/Software-Programming/FlatIron-Labs/javascript-project-question-forum/frontend/index.html"

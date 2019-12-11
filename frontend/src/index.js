@@ -100,7 +100,6 @@ function renderQuestionsPage() {  // Renders the index page with all of the Prim
 	  })
 	  .then(function(primary_comments) {
 	  	createPrimaryComments(primary_comments)
-	  	createNewQuestionButton()
 	  	fetchSecondaryComments()
 	  })
 	  .catch(function(error) {
@@ -116,12 +115,10 @@ function createUsersObj(users) { // Saves User data from Fetch into variable
 
 
 function createPrimaryComments(primary_comments) {  // Renders Primary Comments to the index page
+	createNewQuestionButton()
 	const primary_comments_main = document.createElement('div')
-	primary_comments_main.id = "questions"
-	main_div.append(primary_comments_main)
-	let user_name = document.createElement('h3')
-	user_name.innerText = `Hi ${current_user.name}, welcome to the forum!`
-	primary_comments_main.append(user_name)
+	primary_comments_main.id = "questions-list"
+	main_div.append(primary_comments_main)	
 	primary_comments["data"].forEach((primary_comment) => {
 		const primary_comment_div = document.createElement('div')
 		primary_comment_div.className = "prim-comment"
@@ -140,11 +137,11 @@ function createPrimaryComments(primary_comments) {  // Renders Primary Comments 
 		primary_comment_div.append(name_element)
 		primary_comment_id = primary_comment["attributes"]["id"]
 		const reply_button = document.createElement('button') // Add reply button to Primary Comments
-		reply_button.id = `prime-comment-reply-button-${primary_comment["attributes"]["id"]}`
+		reply_button.id = "prime-comment-reply-button"
 		reply_button.setAttribute("data-id", primary_comment["attributes"]["id"])
 		reply_button.innerText = "Reply"
 		reply_button.addEventListener("click", function() {
-			secondaryCommentForm(`${this.dataset.id}`)
+			secondaryCommentForm(`${this.dataset.id}`, primary_comment_div)
 		})
 		primary_comment_div.append(reply_button)
 	})
@@ -152,13 +149,18 @@ function createPrimaryComments(primary_comments) {  // Renders Primary Comments 
 
 
 function createNewQuestionButton() {
-	const new_prim_comment_button = document.createElement('button')
-	new_prim_comment_button.id = "new-question-button"
-	new_prim_comment_button.innerText = "Ask a New Question"
-	const primary_comments_main = document.getElementById("questions")
-	primary_comments_main.append(new_prim_comment_button)
-	new_prim_comment_button.addEventListener("click", function() {
-		newPrimaryQuestionForm()
+	const new_prime_comment_div = document.createElement('div')
+	new_prime_comment_div.id = "new-primary-comment-div"
+	main_div.append(new_prime_comment_div)
+	let user_greeting = document.createElement('h3')
+	user_greeting.innerText = `Hi ${current_user.name}, welcome to the forum!`
+	new_prime_comment_div.append(user_greeting)
+	const new_prime_comment_button = document.createElement('button')
+	new_prime_comment_button.id = "new-question-button"
+	new_prime_comment_button.innerText = "Ask a New Question"
+	new_prime_comment_div.append(new_prime_comment_button)
+	new_prime_comment_button.addEventListener("click", function() {
+	newPrimaryQuestionForm(new_prime_comment_div)
 	})
 }
 
@@ -173,7 +175,7 @@ function fetchSecondaryComments() { // Added function to synchronize the loading
 	  .catch(function(error) {
 	    alert("There was an error fetching the Secondary Comments!");
 	    console.log(error)
-	  }) 
+	  })
 }
 
 function createSecondaryComments(secondary_comments) {
@@ -200,10 +202,10 @@ function createSecondaryComments(secondary_comments) {
 	})
 }
 
-function secondaryCommentForm(primary_comment_id) {
+function secondaryCommentForm(primary_comment_id, primary_comment_div) {
 	const sec_comment_form_div = document.createElement('div')
 	sec_comment_form_div.id = "new-sec-comment"
-	main_div.appendChild(sec_comment_form_div)
+	primary_comment_div.appendChild(sec_comment_form_div)
 	const question_form = document.createElement('form') // Create New Form Element
 	question_form.setAttribute("action", "") // Setting Action Attribute on Form
 	question_form.setAttribute("method", "post") // Setting Method Attribute on Form
@@ -218,29 +220,6 @@ function secondaryCommentForm(primary_comment_id) {
 
 	const linebreak = document.createElement('br')
 	question_form.appendChild(linebreak)
-
-	// const namelabel = document.createElement('label') // Create Label for Name Field
-	// namelabel.innerHTML = "Your Name : " // Set Field Labels
-	// question_form.appendChild(namelabel)
-
-	// const inputelement = document.createElement('input') // Create Input Field for Name
-	// inputelement.setAttribute("type", "text")
-	// inputelement.setAttribute("name", "dname")
-	// question_form.appendChild(inputelement)
-
-	// question_form.appendChild(linebreak)
-
-	// const email_label = document.createElement('label') // Create Label for E-mail Field
-	// email_label.innerHTML = "Your Email : "
-	// question_form.appendChild(email_label)
-
-	// const email_element = document.createElement('input'); // Create Input Field for E-mail
-	// email_element.setAttribute("type", "text");
-	// email_element.setAttribute("name", "demail");
-	// question_form.appendChild(email_element);
-
-	// const email_break = document.createElement('br');
-	// question_form.appendChild(email_break);
 
 	const messagelabel = document.createElement('label'); // Append Textarea
 	messagelabel.innerHTML = "Your Reply : ";
@@ -299,10 +278,10 @@ function secondaryCommentForm(primary_comment_id) {
 }
 
 
-function newPrimaryQuestionForm() {
+function newPrimaryQuestionForm(new_prim_comment_div) {
 	const new_question_form_div = document.createElement('div')
 	new_question_form_div.id = "new_question"
-	main_div.appendChild(new_question_form_div)
+	new_prim_comment_div.appendChild(new_question_form_div)
 	const question_form = document.createElement('form') // Create New Form Element
 	question_form.setAttribute("action", "") // Setting Action Attribute on Form
 	question_form.setAttribute("method", "post") // Setting Method Attribute on Form
@@ -317,29 +296,6 @@ function newPrimaryQuestionForm() {
 
 	const linebreak = document.createElement('br')
 	question_form.appendChild(linebreak)
-
-	// const namelabel = document.createElement('label') // Create Label for Name Field
-	// namelabel.innerHTML = "Your Name : " // Set Field Labels
-	// question_form.appendChild(namelabel)
-
-	// const inputelement = document.createElement('input') // Create Input Field for Name
-	// inputelement.setAttribute("type", "text")
-	// inputelement.setAttribute("name", "dname")
-	// question_form.appendChild(inputelement)
-
-	// question_form.appendChild(linebreak)
-
-	// const email_label = document.createElement('label') // Create Label for E-mail Field
-	// email_label.innerHTML = "Your Email : "
-	// question_form.appendChild(email_label)
-
-	// const email_element = document.createElement('input'); // Create Input Field for E-mail
-	// email_element.setAttribute("type", "text");
-	// email_element.setAttribute("name", "demail");
-	// question_form.appendChild(email_element);
-
-	// const email_break = document.createElement('br');
-	// question_form.appendChild(email_break);
 
 	const messagelabel = document.createElement('label'); // Append Textarea
 	messagelabel.innerHTML = "Your Question : ";
@@ -391,12 +347,12 @@ function newPrimaryQuestionForm() {
 }
 
 function resetDOM() {
-	const primary_comments_main = document.querySelector("#questions")
-	const new_question_form_div = document.querySelector("#new_question")
+	const primary_comments_main = document.querySelector("#questions-list")
+	const new_primary_comment_div = document.querySelector("#new-primary-comment-div")
 	const sec_comment_form_div = document.querySelector("#new-sec-comment")
 	const primary_comment_divs = document.querySelectorAll(".prim-comment")
-	if (new_question_form_div) {
-		new_question_form_div.parentNode.removeChild(new_question_form_div)
+	if (new_primary_comment_div) {
+		new_primary_comment_div.parentNode.removeChild(new_primary_comment_div)
 	}
 	if (sec_comment_form_div) {
 		sec_comment_form_div.parentNode.removeChild(sec_comment_form_div)
