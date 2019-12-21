@@ -19,7 +19,6 @@ class PrimaryCommentsController < ApplicationController
   	def create
     	primary_comment = PrimaryComment.create(user_id: params[:user_id], comment: params[:comment])
     	if primary_comment
-    		# Redirects to the Primary Comment's show page
         primary_comments = PrimaryComment.all
         options = {
         include: [:user]
