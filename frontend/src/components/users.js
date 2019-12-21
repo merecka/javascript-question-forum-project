@@ -1,9 +1,14 @@
 class Users {
+
 	constructor() {
 		this.users = []
 		this.adapter = new UsersAdapter()
-		// this.bindEventListeners()
+		this.BindingAndEventListeners()
 		this.fetchAndLoadUsers()
+	}
+
+	BindingAndEventListeners() {
+		this.welcomeMessageContainer = document.getElementById('welcome-message')
 	}
 
 	fetchAndLoadUsers() {
@@ -11,13 +16,15 @@ class Users {
 		.then(users => {
 			users["data"].forEach(user => this.users.push(user))
 		})
-		.then(() => { 
-			this.render()
+		.then(() => {
+			this.renderWelcomeMessage()
 		})
 	}
 
-	render() {
-			const notesContainer = document.getElementById('welcome-message')
-			notesContainer.innerHTML = 'Put a welcome message here'
+	renderWelcomeMessage() {
+		this.welcomeMessage = document.createElement('p')
+		this.welcomeMessage.innerHTML = `Welcome to the forum, ${User.the_current_user.name}!`
+		this.welcomeMessageContainer.append(this.welcomeMessage)
+		new PrimaryComments()
 	}
 }

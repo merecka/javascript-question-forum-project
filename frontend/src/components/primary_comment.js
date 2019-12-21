@@ -6,4 +6,6 @@ class PrimaryComment {
 		this.created_at = primarycommentJSON.created_at
 		this.updated_at = primarycommentJSON.updated_at
 	}
+
+	
 }

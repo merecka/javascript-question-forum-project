@@ -3,7 +3,7 @@ const LOGIN_URL = `${BASE_URL}/login`
 
 
 function loginForm() {
-	const login_form_div = document.getElementById("login")
+	const login_form_div = document.getElementById("login-form-div")
 	const login_form = document.createElement('form') // Create New Form Element
 	login_form.setAttribute("action", "") // Setting Action Attribute on Form
 	login_form.setAttribute("method", "post") // Setting Method Attribute on Form
@@ -65,7 +65,9 @@ function loginForm() {
 			if (res.status < 200 || res.status > 299) {
 	  		throw new Error() }
 		})
-		.then(function() {
+		.then(function(user) {
+			let current_user = new User(user)
+			User.the_current_user(current_user) // Set's logged in user as the global static User
 			window.location.pathname = "/Users/alexmerecka/Software-Programming/FlatIron-Labs/javascript-project-question-forum/frontend/index.html"
 		})
 		.catch(function(error) {
@@ -75,7 +77,3 @@ function loginForm() {
 	})
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
-	loginForm()
-})
