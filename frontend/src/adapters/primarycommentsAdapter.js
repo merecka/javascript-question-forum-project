@@ -12,7 +12,6 @@ class PrimaryCommentsAdapter {
 			user_id: jsonObject.user_id,
 			comment: jsonObject.comment
 		}
-		debugger
 		return fetch(this.primarycommentsUrl, {
 			method: "POST",
 			headers: {

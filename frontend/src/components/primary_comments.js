@@ -24,7 +24,7 @@ class PrimaryComments {
 		new_prime_comment_button.addEventListener("click", this.renderNewQuestionForm.bind(this))
 	}
 
-	fetchAndLoadPrimaryComments() {
+	fetchAndLoadPrimaryComments() { // Fetches Primary Comments from the API
 		this.adapter.getPrimaryComments()
 		.then(prime_comments => {
 			// Add's fetched Primary Comments to primary_comments array
@@ -35,9 +35,35 @@ class PrimaryComments {
 		})
 	}
 
-	renderPrimaryQuestions() {
+	renderPrimaryQuestions() { // Renders fetched Primary Comments to the DOM
 		// Renders Primary Comments to the DOM
-		this.primaryquestionsContainer.innerHTML = this.primary_comments.map(comment => `<p>${comment.comment}</p>`)
+		this.primaryquestionsContainer.innerHTML = ""
+		this.primary_comments.forEach((primary_comment) => {
+			const primary_comment_div = document.createElement('div')
+			primary_comment_div.className = "prim-comment"
+			primary_comment_div.id = `prim-comment-${primary_comment.id}`
+			primary_comment_div.setAttribute("data-id", primary_comment.id)
+			let comment_para = document.createElement('p')
+			comment_para.innerText = primary_comment.comment
+			primary_comment_div.append(comment_para)
+			this.primaryquestionsContainer.append(primary_comment_div)
+			// const name_element = document.createElement('h3')
+			// users_obj["data"].forEach((user) => {
+			// 	if (user.attributes.id === primary_comment["attributes"]["user_id"]) {
+			// 		name_element.innerText = user.attributes.name // Sets User name to Primary comments they've created
+			// 	}
+			// })
+			// primary_comment_div.append(name_element)
+			// primary_comment_id = primary_comment["attributes"]["id"]
+			// const reply_button = document.createElement('button') // Add reply button to Primary Comments
+			// reply_button.id = "prime-comment-reply-button"
+			// reply_button.setAttribute("data-id", primary_comment["attributes"]["id"])
+			// reply_button.innerText = "Reply"
+			// reply_button.addEventListener("click", function() {
+			// 	secondaryCommentForm(`${this.dataset.id}`, primary_comment_div)
+			// })
+			// primary_comment_div.append(reply_button)
+		})
 	}
 
 	renderNewQuestionForm() {
