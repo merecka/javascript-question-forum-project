@@ -1,10 +1,11 @@
 class Users {
 
-	constructor() {
+	constructor(current_user) {
 		this.users = []
 		this.adapter = new UsersAdapter()
 		this.BindingAndEventListeners()
 		this.fetchAndLoadUsers()
+
 	}
 
 	BindingAndEventListeners() {
@@ -22,6 +23,7 @@ class Users {
 	}
 
 	renderWelcomeMessage() {
+		this.welcomeMessageContainer.innerHTML = ""
 		this.welcomeMessage = document.createElement('p')
 		this.welcomeMessage.innerHTML = `Welcome to the forum, ${User.the_current_user.name}!`
 		this.welcomeMessageContainer.append(this.welcomeMessage)

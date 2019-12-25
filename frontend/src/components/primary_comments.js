@@ -37,8 +37,8 @@ class PrimaryComments {
 		})
 	}
 
-	renderPrimaryQuestions() { // Renders the fetched Primary Comments to the DOM
-		// Renders Primary Comments to the DOM
+	// Renders the fetched Primary Comments to the DOM
+	renderPrimaryQuestions() { 
 		this.primaryquestionsContainer.innerHTML = ""
 		this.primary_comments.forEach((primary_comment) => {
 			// debugger
@@ -64,8 +64,7 @@ class PrimaryComments {
 	}
 
 	renderNewQuestionForm() {
-		const new_prime_comment_button = document.getElementById('new-question-button')
-		new_prime_comment_button.parentNode.removeChild(new_prime_comment_button) // Removes 'Ask a New Question' button after it is clicked
+		this.new_prime_comment_button = document.getElementById('new-question-button')
 		const question_form = document.createElement('form') // Create New Form Element
 		question_form.id = "new-question-form"
 		question_form.setAttribute("action", "") // Setting Action Attribute on Form
@@ -112,8 +111,9 @@ class PrimaryComments {
 			for (const [key, value] of form_data.entries()) {
 				jsonObject[key] = value
 			}
-			question_form.parentNode.removeChild(question_form) // Removes New Question form after it is clicked
 			this.adapter.createPrimaryComment(jsonObject)
+			this.new_prime_comment_button.parentNode.removeChild(this.new_prime_comment_button) // Removes 'Ask a New Question' button after it is clicked
+			question_form.parentNode.removeChild(question_form) // Removes New Question form after it is submitted
 		})
 	}
 }

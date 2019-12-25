@@ -23,7 +23,8 @@ class PrimaryCommentsAdapter {
 			return response.json()
 		})
 		.then(() => {
-			new PrimaryComments()
+			// new PrimaryComments()
+			new Users()
 		})
 	}
 }
