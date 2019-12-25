@@ -19,6 +19,7 @@ class PrimaryComments {
 	}
 
 	createNewQuestionButton() {
+		this.newQuestionFormDiv.innerHTML = ""
 		const new_prime_comment_button = document.createElement('button')
 		new_prime_comment_button.id = "new-question-button"
 		new_prime_comment_button.innerText = "Ask a New Question"
@@ -111,9 +112,8 @@ class PrimaryComments {
 			for (const [key, value] of form_data.entries()) {
 				jsonObject[key] = value
 			}
-			this.adapter.createPrimaryComment(jsonObject)
-			this.new_prime_comment_button.parentNode.removeChild(this.new_prime_comment_button) // Removes 'Ask a New Question' button after it is clicked
-			question_form.parentNode.removeChild(question_form) // Removes New Question form after it is submitted
+			this.adapter.createPrimaryComment(jsonObject)			
+			// this.new_prime_comment_button.parentNode.removeChild(this.new_prime_comment_button) // Removes 'Ask a New Question' button after it is clicked
 		})
 	}
 }
