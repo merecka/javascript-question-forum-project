@@ -5,6 +5,7 @@ class PrimaryComments {
 		this.primary_comments = []
 		this.secondary_comments = []
 		this.adapter = new PrimaryCommentsAdapter()
+		this.sec_com_adapter = new SecondaryCommentsAdapter()
 		this.BindingAndEventListeners()
 		this.createNewQuestionButton()
 		this.fetchAndLoadPrimaryComments()
@@ -14,19 +15,20 @@ class PrimaryComments {
 		this.primaryquestionsContainer = document.getElementById('primary-questions')
 		this.newQuestionBody = document.getElementById('new-question-body')
 		this.newQuestionFormDiv = document.getElementById('new-question-form-div')
-		this.newQuestionForm = addEventListener('submit', this.renderNewQuestionForm.bind(this)) // Binds this to the PrimaryComments class instance and not the event
 		this.welcomeMessageContainer = document.getElementById('welcome-message')
 	}
 
+	// Adds a Ask a New Question button to the DOM
 	createNewQuestionButton() {
 		this.newQuestionFormDiv.innerHTML = ""
 		const new_prime_comment_button = document.createElement('button')
 		new_prime_comment_button.id = "new-question-button"
 		new_prime_comment_button.innerText = "Ask a New Question"
 		this.newQuestionFormDiv.append(new_prime_comment_button)
-		new_prime_comment_button.addEventListener("click", this.renderNewQuestionForm.bind(this))
+		new_prime_comment_button.addEventListener("click", this.adapter.renderNewQuestionForm.bind(this.adapter))
 	}
 
+	// Fetches the Primary Comments from the API
 	fetchAndLoadPrimaryComments() { // Fetches Primary Comments from the API
 		this.adapter.getPrimaryComments()
 		.then(prime_comments => {
@@ -42,7 +44,6 @@ class PrimaryComments {
 	renderPrimaryQuestions() { 
 		this.primaryquestionsContainer.innerHTML = ""
 		this.primary_comments.forEach((primary_comment) => {
-			// debugger
 			const primary_comment_div = document.createElement('div') // Creates div for each Primary Comment
 			primary_comment_div.className = "prim-comment"
 			primary_comment_div.id = `prim-comment-${primary_comment.id}`
@@ -59,62 +60,24 @@ class PrimaryComments {
 			let comment_para = document.createElement('p')
 			comment_para.innerText = primary_comment.comment
 			primary_comment_div.append(comment_para) // Append comment to the div
+
+			this.renderReplyButton(primary_comment, primary_comment_div)
+
 			this.primaryquestionsContainer.append(primary_comment_div)
 		})
 		new SecondaryComments(this.users)
 	}
 
-	renderNewQuestionForm() {
-		this.new_prime_comment_button = document.getElementById('new-question-button')
-		const question_form = document.createElement('form') // Create New Form Element
-		question_form.id = "new-question-form"
-		question_form.setAttribute("action", "") // Setting Action Attribute on Form
-		question_form.setAttribute("method", "post") // Setting Method Attribute on Form
-		this.newQuestionFormDiv.appendChild(question_form)
-
-		const heading = document.createElement('h2') // Heading of Form
-		heading.innerHTML = "New Question Form"
-		question_form.appendChild(heading)
-
-		const line = document.createElement('hr') // Giving Horizontal Row After Heading
-		question_form.appendChild(line)
-
-		const linebreak = document.createElement('br')
-		question_form.appendChild(linebreak)
-
-		const messagelabel = document.createElement('label'); // Append Textarea
-		messagelabel.innerHTML = "Your Question : ";
-		question_form.appendChild(messagelabel);
-
-		const textarea_element = document.createElement('textarea');
-		textarea_element.setAttribute("name", "comment");
-		question_form.appendChild(textarea_element);
-
-		const current_user_id = document.createElement('input') // Appends the current User's ID to the form
-		current_user_id.setAttribute("type", "hidden")
-		current_user_id.setAttribute("name", "user_id")
-		current_user_id.setAttribute("value", User.the_current_user.id)
-		question_form.appendChild(current_user_id)
-
-		const messagebreak = document.createElement('br');
-		question_form.appendChild(messagebreak);
-
-		const submitelement = document.createElement('input'); // Append Submit Button
-		submitelement.setAttribute("type", "submit");
-		submitelement.setAttribute("name", "dsubmit");
-		submitelement.setAttribute("value", "Submit Question");
-		question_form.appendChild(submitelement);
-
-		question_form.addEventListener("submit", (event) => {
-			event.preventDefault()
-			let form_data = new FormData(question_form)
-			let jsonObject = {}
-			for (const [key, value] of form_data.entries()) {
-				jsonObject[key] = value
-			}
-			this.adapter.createPrimaryComment(jsonObject)			
-			// this.new_prime_comment_button.parentNode.removeChild(this.new_prime_comment_button) // Removes 'Ask a New Question' button after it is clicked
+	// Creates and appends a Reply button to each individual Primary Comment
+	renderReplyButton(primary_comment, primary_comment_div) {
+		const reply_button = document.createElement('button') // Add reply button to Primary Comments
+		reply_button.id = "prime-comment-reply-button"
+		reply_button.setAttribute("data-id", primary_comment.id)
+		reply_button.innerText = "Reply"
+		reply_button.addEventListener("click", () =>  {
+			this.sec_com_adapter.secondaryCommentForm(primary_comment.id, primary_comment_div)
 		})
+		primary_comment_div.append(reply_button)
 	}
 }
 
