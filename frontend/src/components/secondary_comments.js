@@ -16,10 +16,10 @@ class SecondaryComments {
 		this.primary_comment_divs = document.querySelectorAll(".prim-comment")
 	}
 
-	fetchAndLoadSecondaryComments() { // Fetches Secondary Comments from the API
+	// Fetches Secondary Comments from the API
+	fetchAndLoadSecondaryComments() { 
 		this.adapter.getSecondaryComments()
 		.then(secondary_comments => {
-			// debugger
 			// Add's fetched Secondary Comments to secondary_comments array
 			secondary_comments["data"].forEach(comment => this.secondary_comments.push(new SecondaryComment(comment["attributes"]))) 
 		})
@@ -38,7 +38,7 @@ class SecondaryComments {
 			secondary_comment_div.setAttribute("data-id", secondary_comment.id)
 
 			// Appends the User name to the Secondary Comment
-			const name_element = document.createElement('h5')
+			const name_element = document.createElement('h6')
 			this.users.forEach((user) => {
 			if (user.attributes.id === secondary_comment.user_id)
 				name_element.innerText = user.attributes.name // Sets User name to Secondary comments they've created

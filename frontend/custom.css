@@ -1,0 +1,23 @@
+.sec-comment {
+  margin-left: 50px;
+}
+
+.prim-comment {
+	border-top: 2px solid black; border-bottom: 2px solid black
+}
+
+div#new-question-form-div {
+	padding-bottom: 10px;
+}
+
+.sec-comment {
+	padding-top: 10px;
+}
+
+#cancel-primary-form-button {
+	margin-left: 50px;
+}
+
+#cancel-secondary-form-button {
+	margin-left: 50px;
+}

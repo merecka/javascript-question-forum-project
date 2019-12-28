@@ -18,12 +18,15 @@ class PrimaryComments {
 		this.welcomeMessageContainer = document.getElementById('welcome-message')
 	}
 
-	// Adds a Ask a New Question button to the DOM
+	// Adds a 'Ask a New Question' button to the DOM
 	createNewQuestionButton() {
 		this.newQuestionFormDiv.innerHTML = ""
 		const new_prime_comment_button = document.createElement('button')
 		new_prime_comment_button.id = "new-question-button"
+		new_prime_comment_button.className = "btn btn-primary"
 		new_prime_comment_button.innerText = "Ask a New Question"
+		const linebreak = document.createElement('br')
+		new_prime_comment_button.appendChild(linebreak)
 		this.newQuestionFormDiv.append(new_prime_comment_button)
 		new_prime_comment_button.addEventListener("click", this.adapter.renderNewQuestionForm.bind(this.adapter))
 	}
@@ -43,6 +46,7 @@ class PrimaryComments {
 	// Renders the fetched Primary Comments to the DOM
 	renderPrimaryQuestions() { 
 		this.primaryquestionsContainer.innerHTML = ""
+		let question_counter = 1
 		this.primary_comments.forEach((primary_comment) => {
 			const primary_comment_div = document.createElement('div') // Creates div for each Primary Comment
 			primary_comment_div.className = "prim-comment"
@@ -50,11 +54,16 @@ class PrimaryComments {
 			primary_comment_div.setAttribute("data-id", primary_comment.id)
 			primary_comment_div.setAttribute("data-user-id", primary_comment.user_id)
 
-			const name_element = document.createElement('h3')
+			const question_number = document.createElement('h3')
+			question_number.innerHTML = `Question #${primary_comment.id}`
+			primary_comment_div.append(question_number)
+			question_counter++
+
+			const name_element = document.createElement('h4')
 			let prime_comment_user = this.users.find((user) => {
 			    return user["attributes"].id === primary_comment.user_id
 			})
-			name_element.innerHTML = prime_comment_user["attributes"].name
+			name_element.innerHTML = `Posted by:  ${prime_comment_user["attributes"].name}`
 			primary_comment_div.append(name_element) // Append name to the div
 
 			let comment_para = document.createElement('p')
@@ -62,7 +71,6 @@ class PrimaryComments {
 			primary_comment_div.append(comment_para) // Append comment to the div
 
 			this.renderReplyButton(primary_comment, primary_comment_div)
-
 			this.primaryquestionsContainer.append(primary_comment_div)
 		})
 		new SecondaryComments(this.users)
@@ -74,10 +82,13 @@ class PrimaryComments {
 		reply_button.id = "prime-comment-reply-button"
 		reply_button.setAttribute("data-id", primary_comment.id)
 		reply_button.innerText = "Reply"
-		reply_button.addEventListener("click", () =>  {
-			this.sec_com_adapter.secondaryCommentForm(primary_comment.id, primary_comment_div)
-		})
+		reply_button.className = "btn btn-primary"
 		primary_comment_div.append(reply_button)
+		reply_button.addEventListener("click", () =>  {
+			// this.reply_button.parentNode.removeChild(this.reply_button)
+			this.sec_com_adapter.secondaryCommentForm(primary_comment.id, primary_comment_div, reply_button)
+		})
+		
 	}
 }
 

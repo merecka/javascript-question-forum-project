@@ -29,18 +29,18 @@ class SecondaryCommentsAdapter {
 	}
 
 	// Creates Reply Form for Primary Comments
-	secondaryCommentForm(primary_comment_id, primary_comment_div) {
+	secondaryCommentForm(primary_comment_id, primary_comment_div, reply_button) {
+		reply_button.parentNode.removeChild(reply_button) // Removes 'Reply' button after it is clicked and before Reply form is rendered
 		const sec_comment_form_div = document.createElement('div')
 		sec_comment_form_div.id = "new-sec-comment"
 		primary_comment_div.appendChild(sec_comment_form_div)
 		const question_form = document.createElement('form') // Create New Form Element
 		question_form.setAttribute("action", "") // Setting Action Attribute on Form
 		question_form.setAttribute("method", "post") // Setting Method Attribute on Form
-		sec_comment_form_div.appendChild(question_form)
-
-		const heading = document.createElement('h2') // Heading of Form
-		heading.innerHTML = "New Reply"
-		question_form.appendChild(heading)
+		const form_group_div = document.createElement('div')
+		form_group_div.setAttribute("class", "form-group")
+		form_group_div.appendChild(question_form)		
+		sec_comment_form_div.appendChild(form_group_div)
 
 		const line = document.createElement('hr') // Giving Horizontal Row After Heading
 		question_form.appendChild(line)
@@ -54,6 +54,7 @@ class SecondaryCommentsAdapter {
 
 		const textarea_element = document.createElement('textarea');
 		textarea_element.setAttribute("name", "comment");
+		textarea_element.setAttribute("class", "form-control")
 		question_form.appendChild(textarea_element);
 
 		const current_user_id = document.createElement('input') // Appends the current User's ID to the form
@@ -75,7 +76,19 @@ class SecondaryCommentsAdapter {
 		submitelement.setAttribute("type", "submit");
 		submitelement.setAttribute("name", "dsubmit");
 		submitelement.setAttribute("value", "Submit Reply");
+		submitelement.className = "btn btn-primary"
 		question_form.appendChild(submitelement);
+
+		const cancel_form_button = document.createElement('input')
+		cancel_form_button.setAttribute("type", "button");
+		cancel_form_button.setAttribute("value", "Cancel")
+		cancel_form_button.id = "cancel-secondary-form-button"
+		cancel_form_button.className = "btn btn-primary"
+		question_form.appendChild(cancel_form_button)
+		cancel_form_button.addEventListener("click", (event) => {
+			question_form.parentNode.removeChild(question_form)
+			new Users()
+		})
 
 		question_form.addEventListener("submit", (event) => {
 			event.preventDefault()
