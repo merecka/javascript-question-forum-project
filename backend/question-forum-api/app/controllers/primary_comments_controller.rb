@@ -23,7 +23,7 @@ class PrimaryCommentsController < ApplicationController
         options = {
         include: [:user]
         }
-        render json: PrimaryCommentSerializer.new(primary_comments, options)
+        render json: PrimaryCommentSerializer.new(primary_comments, options), status: 200
     	end
   	end
 

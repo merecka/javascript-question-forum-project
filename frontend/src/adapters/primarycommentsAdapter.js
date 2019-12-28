@@ -90,8 +90,7 @@ class PrimaryCommentsAdapter {
 			question_form.parentNode.removeChild(question_form)
 			new Users()
 		})
-		
-		
+				
 		question_form.addEventListener("submit", (event) => {
 			event.preventDefault()
 			let form_data = new FormData(question_form)

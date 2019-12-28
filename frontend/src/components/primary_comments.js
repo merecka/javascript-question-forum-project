@@ -32,7 +32,7 @@ class PrimaryComments {
 	}
 
 	// Fetches the Primary Comments from the API
-	fetchAndLoadPrimaryComments() { // Fetches Primary Comments from the API
+	fetchAndLoadPrimaryComments() {
 		this.adapter.getPrimaryComments()
 		.then(prime_comments => {
 			// Add's fetched Primary Comments to primary_comments array
@@ -54,11 +54,13 @@ class PrimaryComments {
 			primary_comment_div.setAttribute("data-id", primary_comment.id)
 			primary_comment_div.setAttribute("data-user-id", primary_comment.user_id)
 
+			// Appends the Question Number to the Primary Comment
 			const question_number = document.createElement('h3')
 			question_number.innerHTML = `Question #${primary_comment.id}`
 			primary_comment_div.append(question_number)
 			question_counter++
 
+			// Appends the User's name to the Primary Comment
 			const name_element = document.createElement('h4')
 			let prime_comment_user = this.users.find((user) => {
 			    return user["attributes"].id === primary_comment.user_id
@@ -66,8 +68,17 @@ class PrimaryComments {
 			name_element.innerHTML = `Posted by:  ${prime_comment_user["attributes"].name}`
 			primary_comment_div.append(name_element) // Append name to the div
 
+			// Appends Posted date to the Primary Comment
+			let created_date = new Date(`${primary_comment.created_at}`)
+			const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			let formatted_date = months[created_date.getMonth()] + " " + created_date.getDate() + ", " + created_date.getFullYear() + " at " + created_date.getHours() + ":" + created_date.getMinutes()
+			let posted_date = document.createElement('p')
+			posted_date.innerHTML = `Posted on:  ${formatted_date}`
+			primary_comment_div.append(posted_date)
+
+			// Appends the Comment to the Primary Comment
 			let comment_para = document.createElement('p')
-			comment_para.innerText = primary_comment.comment
+			comment_para.innerText = `Q: ${primary_comment.comment}`
 			primary_comment_div.append(comment_para) // Append comment to the div
 
 			this.renderReplyButton(primary_comment, primary_comment_div)
@@ -85,7 +96,6 @@ class PrimaryComments {
 		reply_button.className = "btn btn-primary"
 		primary_comment_div.append(reply_button)
 		reply_button.addEventListener("click", () =>  {
-			// this.reply_button.parentNode.removeChild(this.reply_button)
 			this.sec_com_adapter.secondaryCommentForm(primary_comment.id, primary_comment_div, reply_button)
 		})
 		
