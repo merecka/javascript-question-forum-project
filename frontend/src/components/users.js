@@ -25,7 +25,7 @@ class Users {
 	renderWelcomeMessage() {
 		this.welcomeMessageContainer.innerHTML = ""
 		this.welcomeMessage = document.createElement('p')
-		this.welcomeMessage.innerHTML = `Welcome to the forum, ${User.the_current_user.name}!`
+		this.welcomeMessage.innerHTML = `Welcome to the Forum, ${User.the_current_user.name}!`
 		this.welcomeMessageContainer.append(this.welcomeMessage)
 		new PrimaryComments(this.users)
 	}

@@ -19,11 +19,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
-    if @user.valid?
+    user = User.create(user_params)
+    if user.valid?
     	# Sets the User session and redirects to the User's show page
-    	session[:current_user_id] = @user.id
-    	redirect_to user_path(@user)
+    	session[:current_user_id] = user.id
+    	render json: user
     else
     	render :new
     end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password)
   end
 
   def locate_user

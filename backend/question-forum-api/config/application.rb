@@ -17,6 +17,8 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
+
 module QuestionForumApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -32,14 +34,16 @@ module QuestionForumApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # config.middleware.use ActionDispatch::Cookies
+    # config.middleware.use ActionDispatch::Session::CookieStore
+
+
       config.middleware.insert_before 0, Rack::Cors do
         allow do
           origins '*'
           resource '*', headers: :any, methods: [:get, :post]
         end
       end
-
-
   end
 end
 

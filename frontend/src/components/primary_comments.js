@@ -61,7 +61,7 @@ class PrimaryComments {
 			question_counter++
 
 			// Appends the User's name to the Primary Comment
-			const name_element = document.createElement('h4')
+			const name_element = document.createElement('p')
 			let prime_comment_user = this.users.find((user) => {
 			    return user["attributes"].id === primary_comment.user_id
 			})
