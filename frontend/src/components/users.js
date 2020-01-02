@@ -5,7 +5,6 @@ class Users {
 		this.adapter = new UsersAdapter()
 		this.BindingAndEventListeners()
 		this.fetchAndLoadUsers()
-
 	}
 
 	BindingAndEventListeners() {

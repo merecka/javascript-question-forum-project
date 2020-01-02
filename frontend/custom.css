@@ -21,3 +21,11 @@ div#new-question-form-div {
 #cancel-secondary-form-button {
 	margin-left: 50px;
 }
+
+#signup-button {
+	margin-left: 200px;
+}
+
+#logout-button {
+	margin-left: 450px;
+}

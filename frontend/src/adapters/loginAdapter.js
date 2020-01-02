@@ -6,7 +6,6 @@ class LoginAdapter {  // Fetches User login information from API
 	}
 
 	async submitLoginFormData(jsonObject) {
-		debugger
 			await fetch(this.loginURL, {
 			method: "POST",
 			headers: {
@@ -53,7 +52,7 @@ class LoginAdapter {  // Fetches User login information from API
 				new Users()
 			})
 			.catch(function(error) {
-		    	alert("There was an error logging in!");
+		    	alert("There was an error signing up!");
 		    	console.log(error.message)
 		 	})
 		}

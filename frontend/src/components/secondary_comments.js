@@ -14,6 +14,7 @@ class SecondaryComments {
 		this.newQuestionFormDiv = document.getElementById('new-question-form-div')
 		this.welcomeMessageContainer = document.getElementById('welcome-message')
 		this.primary_comment_divs = document.querySelectorAll(".prim-comment")
+		this.logout_div = document.getElementById('logout-div')
 	}
 
 	// Fetches Secondary Comments from the API
@@ -45,6 +46,14 @@ class SecondaryComments {
 			})
 			secondary_comment_div.append(name_element)
 
+			// Appends Posted date to the Primary Comment
+			let created_date = new Date(`${secondary_comment.created_at}`)
+			const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			let formatted_date = months[created_date.getMonth()] + " " + created_date.getDate() + ", " + created_date.getFullYear() + " at " + created_date.getHours() + ":" + created_date.getMinutes()
+			let posted_date = document.createElement('p')
+			posted_date.innerHTML = `Posted on:  ${formatted_date}`
+			secondary_comment_div.append(posted_date)
+
 			// Appends the Secondary Comments to the DOM
 			const comment_para = document.createElement('p')
 			comment_para.innerText = secondary_comment.comment
@@ -57,6 +66,20 @@ class SecondaryComments {
 					prime_comment.append(secondary_comment_div) // Appends Secondary comments to Primary comment div
 				}
 			})	
+		})
+		this.renderLogoutButton()
+	}
+
+	renderLogoutButton() {
+		const linebreak = document.createElement('br');
+		this.logout_div.append(linebreak)
+		const logout_button = document.createElement('button')
+		logout_button.id = 'logout-button'
+		logout_button.innerText = "Logout"
+		logout_button.className = "btn btn-primary"
+		this.logout_div.append(logout_button)
+		logout_button.addEventListener("click", (event) => {
+			window.location.reload(true)
 		})
 	}
 
