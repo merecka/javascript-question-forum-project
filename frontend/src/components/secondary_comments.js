@@ -31,7 +31,6 @@ class SecondaryComments {
 
 	// Renders the fetched Secondary Comments to the DOM
 	renderSecondaryComments() { 
-		// this.primaryquestionsContainer.innerHTML = ""
 		this.secondary_comments.forEach((secondary_comment) => {
 			const secondary_comment_div = document.createElement('div')
 			secondary_comment_div.className = "sec-comment"

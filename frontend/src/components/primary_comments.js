@@ -16,6 +16,7 @@ class PrimaryComments {
 		this.newQuestionBody = document.getElementById('new-question-body')
 		this.newQuestionFormDiv = document.getElementById('new-question-form-div')
 		this.welcomeMessageContainer = document.getElementById('welcome-message')
+		this.logoutButtonDiv = document.getElementById('logout-div')
 	}
 
 	// Adds a 'Ask a New Question' button to the DOM
@@ -46,6 +47,7 @@ class PrimaryComments {
 	// Renders the fetched Primary Comments to the DOM
 	renderPrimaryQuestions() { 
 		this.primaryquestionsContainer.innerHTML = ""
+		this.logoutButtonDiv.innerHTML = ""
 		let question_counter = 1
 		this.primary_comments.forEach((primary_comment) => {
 			const primary_comment_div = document.createElement('div') // Creates div for each Primary Comment

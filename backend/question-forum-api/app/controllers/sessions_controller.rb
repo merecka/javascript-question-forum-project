@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       user = User.find_by(name: params[:name])
       if user && user.password == params[:password]
         session[:current_user_id] = user.id
-        render json: user
+        render json: user, status: 200
       else
         redirect_to '/login'
       end
