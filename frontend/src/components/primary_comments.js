@@ -100,8 +100,11 @@ class PrimaryComments {
 		reply_button.addEventListener("click", () =>  {
 			this.sec_com_adapter.secondaryCommentForm(primary_comment.id, primary_comment_div, reply_button)
 		})
-		
+
 	}
 }
+
+
+
 
 	
